@@ -1,5 +1,0 @@
-if(EXISTS "/home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/regression_test_query_after_clear[1]_tests.cmake")
-  include("/home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/regression_test_query_after_clear[1]_tests.cmake")
-else()
-  add_test(regression_test_query_after_clear_NOT_BUILT regression_test_query_after_clear_NOT_BUILT)
-endif()

@@ -1,5 +1,0 @@
-if(EXISTS "/home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/test_cuda_stream[1]_tests.cmake")
-  include("/home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/test_cuda_stream[1]_tests.cmake")
-else()
-  add_test(test_cuda_stream_NOT_BUILT test_cuda_stream_NOT_BUILT)
-endif()

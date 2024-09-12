@@ -1,5 +1,0 @@
-if(EXISTS "/home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/test_rates[1]_tests.cmake")
-  include("/home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/test_rates[1]_tests.cmake")
-else()
-  add_test(test_rates_NOT_BUILT test_rates_NOT_BUILT)
-endif()

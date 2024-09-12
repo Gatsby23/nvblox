@@ -1,1 +1,0 @@
-/home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/tests/../visualization/visualize_mesh.py
