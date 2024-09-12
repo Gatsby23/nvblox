@@ -35,6 +35,7 @@ TEST(BloxTest, InitializeDistanceBloxOnGPU) {
   TsdfVoxel one_voxel;
   one_voxel.distance = 1.0f;
   one_voxel.weight = 1.0f;
+  // 只是初始化，没赋值，所以肯定是错的.
   EXPECT_FALSE(test_utils::checkBlockAllConstant(block_ptr, one_voxel));
 }
 
@@ -45,6 +46,7 @@ TEST(BloxTestDeathTest, NoAllocationDefined) {
 
 TEST(BloxTest, CustomGPUInitialization) {
   constexpr float block_size_m = 0.1;
+  // 这里的MemoryType::kDevice是代表初始化在GPU上，所以data是1.
   BlockLayer<VoxelBlock<InitializationTestVoxel>> layer(block_size_m,
                                                         MemoryType::kDevice);
   auto block_ptr = layer.allocateBlockAtIndex(Index3D(0, 0, 0));

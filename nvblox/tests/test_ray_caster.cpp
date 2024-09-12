@@ -32,9 +32,13 @@ class RayCasterTest : public ::testing::Test {
   static constexpr float kFloatEpsilon = 1e-4;
 };
 
+/// 这个test主要是为了证明尺度并不影响ray cast穿过的indices的位置.
 TEST_F(RayCasterTest, StraightAheadCast) {
   Vector3f start(0.0f, 0.0f, 0.0f);
   Vector3f end(5.0f, 0.0f, 0.0f);
+  // Raycaster默认是在边长为1的voxel里进行操作
+  // 这里需要注意的是voxel的边长为1，但是block的边长不为1->所以得到x,y,z增加的数目就是要走的step和距离了
+  // 每次+1，就是对应的新的voxel id.
   RayCaster raycaster(start, end);
 
   std::vector<Index3D> all_indices;
@@ -81,7 +85,7 @@ TEST_F(RayCasterTest, ObliqueCast) {
 
   ASSERT_EQ(all_indices.size(), all_scaled_indices.size());
 
-  // Finally, backwards.
+  // Finally, backwards->反向穿越.
   RayCaster backwards_raycaster(end, start);
   std::vector<Index3D> all_backwards_indices;
   backwards_raycaster.getAllIndices(&all_backwards_indices);

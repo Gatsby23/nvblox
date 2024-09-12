@@ -54,28 +54,38 @@ bool interpolateMemberOnCPU(const Vector3f& p_L,
 
 Eigen::Matrix<float, 8, 1> getQVector3D(const Vector3f& p_offset_in_voxels_L);
 
+/*
+ * @param p_L:以p为中心，L为半径的范围.
+ */
 template <typename VoxelType>
 bool getSurroundingVoxels3D(const Eigen::Vector3f p_L,
                             const VoxelBlockLayer<VoxelType>& layer,
                             VoxelValidFunctionType<VoxelType> is_valid,
                             std::array<VoxelType, 8>* voxels_ptr,
                             Vector3f* p_offset_in_voxels_L_ptr = nullptr) {
+  // 确定指针非空->有voxel值.
   CHECK_NOTNULL(voxels_ptr);
   // Get the low-side voxel: ie the voxel whose midpoint lies on the low side of
   // the query point
   // NOTE(alexmillane): We implement this by finding the block
   // and voxel coordinates of a point half a voxel-width lower than the query
   // point.
+  // 我们通过找到比查询点低半个体素宽点的块和体素坐标来实现这一点.
   const float voxel_size = layer.voxel_size();
   const float half_voxel_size = voxel_size * 0.5f;
+  // block idx.
   Index3D low_block_idx;
+  // voxel idx.
   Index3D low_voxel_idx;
+  // 获得这一范围类对应的voxel idx和block idx.
   getBlockAndVoxelIndexFromPositionInLayer(layer.block_size(),
                                            p_L.array() - half_voxel_size,
                                            &low_block_idx, &low_voxel_idx);
 
   // Get offset between bottom-left-corner voxel and the point
+  // Block左侧最小的voxel到这点之间的偏移量.
   if (p_offset_in_voxels_L_ptr != nullptr) {
+    // 得到laye中block最左侧所在空间中的位置.
     const Vector3f p_corner_L =
         getPositionFromBlockIndexAndVoxelIndex(layer.block_size(),
                                                low_block_idx, low_voxel_idx) +
@@ -92,6 +102,7 @@ bool getSurroundingVoxels3D(const Eigen::Vector3f p_L,
         Index3D block_idx = low_block_idx;
 
         // Move into a neighbouring block(s) if required
+        // voxel idx增加，如果碰到了block边界处的处理方法.
         if ((voxel_idx.array() == VoxelBlock<bool>::kVoxelsPerSide).any()) {
           // Increment block index in dimensions which have hit the limits
           const Eigen::Array<bool, 3, 1> limits_hit_flags =

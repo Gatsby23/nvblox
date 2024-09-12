@@ -1,0 +1,123 @@
+/snap/clion/292/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -S /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox -B /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug
+-- The CXX compiler identification is GNU 9.4.0
+-- The CUDA compiler identification is NVIDIA 11.8.89
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/lib/ccache/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting CUDA compiler ABI info
+-- Detecting CUDA compiler ABI info - done
+-- Check for working CUDA compiler: /usr/local/cuda-11.8/bin/nvcc - skipped
+-- Detecting CUDA compile features
+-- Detecting CUDA compile features - done
+-- Found CUDAToolkit: /usr/local/cuda-11.8/targets/x86_64-linux/include (found version "11.8.89")
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - found
+-- Found Threads: TRUE
+-- Detecting CCs of GPUs : /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake/cuda/compute_capability.cpp
+-- Detecting CCs of GPUs : /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake/cuda/compute_capability.cpp - Success (found CCs : 89)
+-- Building for cuda architectues: 89
+-- Downloading 3rdparty dependencies
+-- Downloading Eigen
+CMake Warning (dev) at /snap/clion/292/bin/cmake/linux/x64/share/cmake-3.29/Modules/ExternalProject.cmake:3239 (message):
+  The DOWNLOAD_EXTRACT_TIMESTAMP option was not given and policy CMP0135 is
+  not set.  The policy's OLD behavior will be used.  When using a URL
+  download, the timestamps of extracted files should preferably be that of
+  the time of extraction, otherwise code that depends on the extracted
+  contents might not be rebuilt if the URL changes.  The OLD behavior
+  preserves the timestamps from the archive instead, but this is usually not
+  what you want.  Update your project to the NEW behavior or specify the
+  DOWNLOAD_EXTRACT_TIMESTAMP option with a value of true to avoid this
+  robustness issue.
+Call Stack (most recent call first):
+  /snap/clion/292/bin/cmake/linux/x64/share/cmake-3.29/Modules/ExternalProject.cmake:4465 (_ep_add_download_command)
+  thirdparty/eigen/eigen.cmake:3 (ExternalProject_Add)
+  CMakeLists.txt:49 (include)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Downloading STDGPU
+-- Found thrust: /usr/local/cuda/include (found suitable version "1.15.1", minimum required is "1.9.2")
+-- Found CUDAToolkit: /usr/local/cuda-11.8/targets/x86_64-linux/include (found suitable version "11.8.89", minimum required is "10.0")
+-- Could NOT find Doxygen (missing: DOXYGEN_EXECUTABLE) (Required is at least version "1.9.1")
+-- 
+-- ************************ stdgpu Configuration Summary *************************
+-- 
+-- General:
+--   Version                                   :   1.3.0
+--   System                                    :   Linux
+--   Build type                                :   Debug
+-- 
+-- Build:
+--   STDGPU_BACKEND                            :   STDGPU_BACKEND_CUDA
+--   STDGPU_BUILD_SHARED_LIBS                  :   OFF
+--   STDGPU_SETUP_COMPILER_FLAGS               :   OFF
+--   STDGPU_TREAT_WARNINGS_AS_ERRORS           :   OFF
+--   STDGPU_ANALYZE_WITH_CLANG_TIDY            :   OFF
+--   STDGPU_ANALYZE_WITH_CPPCHECK              :   OFF
+-- 
+-- Configuration:
+--   STDGPU_ENABLE_CONTRACT_CHECKS             :   OFF
+--   STDGPU_USE_32_BIT_INDEX                   :   ON
+-- 
+-- Examples:
+--   STDGPU_BUILD_EXAMPLES                     :   OFF
+-- 
+-- Tests:
+--   STDGPU_BUILD_TESTS                        :   OFF
+--   STDGPU_BUILD_TEST_COVERAGE                :   OFF
+-- 
+-- Documentation:
+--   Doxygen                                   :   NO
+-- 
+-- *******************************************************************************
+-- 
+-- Found Glog: /usr/include
+-- Found SQLite3: /usr/include (found version "3.31.1")
+-- Found GTest: /usr/lib/x86_64-linux-gnu/libgtest.a
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/dynamic_mask
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/dynamic_mask/mask_21.png
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/human_dataset
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/human_dataset/camera-intrinsics.txt
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/human_dataset/depth_image_2.png
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/human_dataset/depth_image_1.png
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/replica
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/replica/cam_params.json
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/replica/office0
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/replica/office0/results
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/replica/office0/results/frame000002.jpg
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/replica/office0/results/depth000002.png
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/replica/office0/results/frame000003.jpg
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/replica/office0/results/frame000001.jpg
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/replica/office0/results/frame000000.jpg
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/replica/office0/results/depth000000.png
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/replica/office0/results/depth000003.png
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/replica/office0/results/depth000001.png
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/replica/office0/traj.txt
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/replica/office0_mesh.ply
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch/camera-intrinsics.txt
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch/seq-01
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch/seq-01/frame-000000.depth.png
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch/seq-01/frame-000116.color.png
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch/seq-01/frame-000000.pose.txt
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch/seq-01/frame-000001.pose.txt
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch/seq-01/frame-000001.depth.png
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch/seq-01/frame-000422.color.png
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch/seq-01/frame-000116.pose.txt
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch/seq-01/frame-000001.color.png
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch/seq-01/frame-000116.depth.png
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch/seq-01/frame-000422.depth.png
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch/seq-01/frame-000002.pose.txt
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch/seq-01/frame-000002.depth.png
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch/seq-01/frame-000000.color.png
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch/seq-01/frame-000002.color.png
+-- Installing: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/data/3dmatch/seq-01/frame-000422.pose.txt
+-- Configuring done (4.9s)
+-- Generating done (0.1s)
+-- Build files have been written to: /home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug

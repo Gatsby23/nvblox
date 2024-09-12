@@ -101,10 +101,12 @@ struct InitializationTestVoxel {
   uint8_t data = kCPUInitializationValue;
 };
 
+// 模板偏特化，对测试当中的Block进行初始化.
 template <>
 inline void VoxelBlock<InitializationTestVoxel>::initAsync(
     VoxelBlock<InitializationTestVoxel>* voxel_block_ptr, const MemoryType,
     const CudaStream& cuda_stream) {
+  // 通过这个函数声明GPU上的Block中的voxel数值对应的data数值为1.
   setBlockBytesConstantOnGPUAsync(
       InitializationTestVoxel::kGPUInitializationValue, voxel_block_ptr,
       cuda_stream);

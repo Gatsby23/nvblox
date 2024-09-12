@@ -23,8 +23,11 @@ limitations under the License.
 
 namespace nvblox {
 
+// Block和Layer的区别（Layer包含Block?）
+// 这里为什么会有Layer的原因，是为了Layer里实现不同的Block和Voxel Type的功能.
 using TsdfBlock = VoxelBlock<TsdfVoxel>;
 using TsdfLayer = VoxelBlockLayer<TsdfVoxel>;
+
 using FreespaceBlock = VoxelBlock<FreespaceVoxel>;
 using FreespaceLayer = VoxelBlockLayer<FreespaceVoxel>;
 using OccupancyBlock = VoxelBlock<OccupancyVoxel>;

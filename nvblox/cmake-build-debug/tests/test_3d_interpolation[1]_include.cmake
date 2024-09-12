@@ -1,0 +1,5 @@
+if(EXISTS "/home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/test_3d_interpolation[1]_tests.cmake")
+  include("/home/robotics/Lab_Study/Mesh_Study/NVBlox_Series/nvblox/nvblox/cmake-build-debug/tests/test_3d_interpolation[1]_tests.cmake")
+else()
+  add_test(test_3d_interpolation_NOT_BUILT test_3d_interpolation_NOT_BUILT)
+endif()

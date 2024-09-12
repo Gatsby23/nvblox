@@ -53,26 +53,34 @@ namespace nvblox {
 namespace primitives {
 
 /// Base class for primitive objects.
+/// 图元的基础类.
 class Primitive {
  public:
   enum class Type { kPlane, kCube, kSphere, kCylinder };
 
   /// Epsilon for ray intersection and computation.
+  /// 用于光线交叉和计算的微小值（Epsilon）
   static constexpr float kEpsilon = 1e-4;
 
+  /// 物体的中心和类型.
   Primitive(const Vector3f& center, Type type)
       : Primitive(center, type, Color::White()) {}
+  /// 物体的中心、类型和颜色.
   Primitive(const Vector3f& center, Type type, const Color& color)
       : center_(center), type_(type), color_(color) {}
+
+  /// 基类的析构函数.
   virtual ~Primitive() {}
 
   /// Map-building accessors.
+  /// 构建地图的访问器.
   virtual float getDistanceToPoint(const Vector3f& point) const = 0;
 
   Color getColor() const { return color_; }
   Type getType() const { return type_; }
 
   /// Raycasting accessors.
+  /// 射线追踪的访问器.
   virtual bool getRayIntersection(const Vector3f& ray_origin,
                                   const Vector3f& ray_direction, float max_dist,
                                   Vector3f* intersect_point,
@@ -122,8 +130,8 @@ class Cube : public Primitive {
   Vector3f size_;
 };
 
-/// Primitive plane, given a center and a normal.
-/// Requires normal being passed in to ALREADY BE NORMALIZED!!!!
+/// Primitive plane, given a center and a normal. -> 原始平面，给定中心和法线向量.
+/// Requires normal being passed in to ALREADY BE NORMALIZED!!!! -> 要求传入的法线必须已经归一化！.
 class Plane : public Primitive {
  public:
   Plane(const Vector3f& center, const Vector3f& normal)
@@ -147,6 +155,7 @@ class Plane : public Primitive {
 };
 
 /// Cylinder centered on the XY plane, with a given radius and height (in Z).
+/// 在XY平面上居中的圆柱体，具有给定的半径和高度（沿Z轴方向）.
 class Cylinder : public Primitive {
  public:
   Cylinder(const Vector3f& center, float radius, float height)

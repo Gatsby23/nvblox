@@ -23,7 +23,7 @@ limitations under the License.
 #include "nvblox/utils/timing.h"
 
 DEFINE_bool(
-    nvblox_test_file_output, false,
+    nvblox_test_file_output, true,
     "Whether to output debug files from tests to disk or not. Off by default.");
 
 namespace nvblox {

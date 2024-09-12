@@ -80,6 +80,7 @@ void setTsdfBlockVoxelsConstant(const float distance, TsdfBlock::Ptr block) {
   checkCudaErrors(cudaPeekAtLastError());
 }
 
+
 __global__ void checkBlockAllConstant(const TsdfBlock* block,
                                       const TsdfVoxel* voxel_constant,
                                       bool* flag) {
@@ -104,6 +105,7 @@ __global__ void checkBlockAllConstant(
     *flag = true;
   }
   __syncthreads();
+  // 这个是依据data来判断是否相同.InitializationTestVoxel
   const InitializationTestVoxel voxel =
       block->voxels[threadIdx.z][threadIdx.y][threadIdx.x];
   if (voxel.data != voxel_constant->data) {
@@ -135,12 +137,15 @@ template <typename VoxelType>
 bool checkBlockAllConstantTemplate(
     const typename VoxelBlock<VoxelType>::Ptr block, VoxelType voxel_cpu) {
   // Allocate memory for the flag
+  // 在GPU上分配一个bool变量.
   bool* flag_device_ptr;
   checkCudaErrors(cudaMalloc(&flag_device_ptr, sizeof(bool)));
 
   // Transfer the CPU voxel to GPU
+  // 将一个CPU上的voxel传递到GPU上.
   VoxelType* voxel_device_ptr;
   checkCudaErrors(cudaMalloc(&voxel_device_ptr, sizeof(VoxelType)));
+  // 从参数2拷贝到参数1: @param2->@param1
   checkCudaErrors(cudaMemcpy(voxel_device_ptr, &voxel_cpu, sizeof(VoxelType),
                              cudaMemcpyHostToDevice));
 
@@ -154,6 +159,7 @@ bool checkBlockAllConstantTemplate(
 
   // Copy the flag back
   bool flag;
+  // 从GPU上拷贝到CPU上。
   checkCudaErrors(
       cudaMemcpy(&flag, flag_device_ptr, sizeof(bool), cudaMemcpyDeviceToHost));
 

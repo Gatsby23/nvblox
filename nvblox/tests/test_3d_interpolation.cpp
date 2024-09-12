@@ -38,9 +38,12 @@ void fillVoxelsWithIndices(VoxelBlock<VoxelType>* block_ptr,
                            const int xyz_index,
                            SetVoxelFunctionType<VoxelType> set_voxel,
                            const int offset = 0) {
+  // 检测访问标号是否大于0.
   CHECK_GE(xyz_index, 0);
+  // 检测访问标号是否小于3.
   CHECK_LT(xyz_index, 3);
-  Index3D index;
+  // 序列标号（Index3D的默认类型实际上就是Eigen::Vector3d）.
+  Index3D index; // 这里感觉因为没有明确，所以index的值会随机初始化.
   for (index.x() = 0; index.x() < TsdfBlock::kVoxelsPerSide; index.x()++) {
     for (index.y() = 0; index.y() < TsdfBlock::kVoxelsPerSide; index.y()++) {
       for (index.z() = 0; index.z() < TsdfBlock::kVoxelsPerSide; index.z()++) {
@@ -51,6 +54,7 @@ void fillVoxelsWithIndices(VoxelBlock<VoxelType>* block_ptr,
   }
 }
 
+// 对TSDFBlock进行设置->这里通过layer得到对应的block.
 void fillVoxelsWithIndices(TsdfBlock* block_ptr, const int xyz_index,
                            const int offset = 0) {
   auto setVoxelLambda = [](TsdfVoxel& voxel, float value) {
@@ -61,6 +65,7 @@ void fillVoxelsWithIndices(TsdfBlock* block_ptr, const int xyz_index,
                                    offset);
 }
 
+// 对ESDF Block进行设置.
 void fillVoxelsWithIndices(EsdfBlock* block_ptr, const int xyz_index,
                            const int offset = 0) {
   auto setVoxelLambda = [](EsdfVoxel& voxel, float value) {
@@ -72,24 +77,35 @@ void fillVoxelsWithIndices(EsdfBlock* block_ptr, const int xyz_index,
 }
 
 TEST(InterpolatorTest, NeighboursTest) {
-  // Empty layer
+  // Voxel size的大小.
   constexpr float kVoxelSize = 1.0f;
+
+  // 创建TSDF的layer->以1.0m为边长来创建Voxel Blocks(每个Blocks中应该包含8个voxels).
   TsdfLayer layer(kVoxelSize, MemoryType::kUnified);
 
   // Allocate a block with its origin at the origin
+  // 在原点处分配一个起始于原点的块.
+  // 这里块是怎么创建的得细看下.
+  // 看下layer和block之间的关系.
   TsdfBlock::Ptr block_ptr = layer.allocateBlockAtIndex(Index3D(0, 0, 0));
 
   // Fill with such that the distances are equal to the x-index;
+  // 填充X这里的voxel，让这里的TSDF值就等于索引x.
+  // 给我的感觉是沿着X轴来进行voxel填充.
+  // 另一个这个沿X轴的做法是？
   fillVoxelsWithIndices(block_ptr.get(), kXAxisIndex);
 
   // Dummy function which always says a voxel is valid
+  // 小函数->判断当前voxel是否可以(访问?)
   auto valid_lambda = [](const TsdfVoxel&) -> bool { return true; };
 
   // Check the surrounding voxels
+  // 获得周围的voxel.
   std::array<TsdfVoxel, 8> voxels;
   Vector3f p_L = 0.0 * Vector3f::Ones();
   EXPECT_FALSE(interpolation::internal::getSurroundingVoxels3D<TsdfVoxel>(
       p_L, layer, valid_lambda, &voxels));
+  // 0.1倍的voxel大小.
   p_L = 0.1 * Vector3f::Ones();
   EXPECT_FALSE(interpolation::internal::getSurroundingVoxels3D<TsdfVoxel>(
       p_L, layer, valid_lambda, &voxels));
@@ -123,6 +139,7 @@ TEST(InterpolatorTest, NeighboursTest) {
     }
   }
 }
+
 
 TEST(InterpolatorTest, OffsetTest) {
   // Empty layer

@@ -57,32 +57,42 @@ TEST_F(DynamicsTester, PrimitiveScene) {
   constexpr float kMaxProjectionDist = 10.0;
 
   // Get a sample scene
+  /// 先生成一个场景.
   primitives::Scene scene;
+  /// 确定这个场景区域.
   scene.aabb() = AxisAlignedBoundingBox(Vector3f(-3.0f, -3.0f, 0.0f),
                                         Vector3f(5.0f, 3.0f, 3.0f));
+  /// 添加地板.
   scene.addGroundLevel(0.0f);
+  /// 添加天花板.
   scene.addCeiling(3.0f);
-  scene.addPrimitive(
-      std::make_unique<primitives::Sphere>(Vector3f(0.0f, 0.2f, 1.0f), 1.0f));
+  /// 往场景中加了一个球.
+  scene.addPrimitive(std::make_unique<primitives::Sphere>(Vector3f(0.0f, 0.2f, 1.0f), 1.0f));
+  /// 添加平面边界.
   scene.addPlaneBoundaries(-2.0f, 5.0f, -3.0f, 2.0f);
 
   // Calculate the freespace layer of the scene
+  /// 计算场景中空白的区域.
   FreespaceLayer freespace_layer_L(voxel_size_m_, MemoryType::kUnified);
+  /// 将场景用 Freespacelayer 重建出来.
   scene.generateLayerFromScene(truncation_distance_meters_, &freespace_layer_L);
 
   // Define the camera to layer transform
+  // 定义相机到场景的相对变化.
   Eigen::Quaternionf rotation_base(0.5, 0.5, 0.5, 0.5);
   Transform T_L_C = Transform::Identity();
   T_L_C.prerotate(Eigen::AngleAxisf(M_PI, Vector3f::UnitY()) * rotation_base);
   T_L_C.pretranslate(Eigen::Vector3f(3.0f, 0.0f, 1.0f));
 
   // Create a depth frame of the scene
+  // 通过场景来生成场景深度图.
   DepthImage depth_frame_C(camera_.height(), camera_.width(),
                            MemoryType::kUnified);
   scene.generateDepthImageFromScene(camera_, T_L_C, kMaxProjectionDist,
                                     &depth_frame_C);
 
   // Check that there are no dynamics detected
+  /// 检查当前是没有动态物体检测到的.
   DynamicsDetection detector;
   detector.computeDynamics(depth_frame_C, freespace_layer_L, camera_, T_L_C);
   auto dynamic_points = detector.getDynamicPointsHost();
@@ -97,11 +107,13 @@ TEST_F(DynamicsTester, PrimitiveScene) {
   // Create a depth frame of the scene including the cube
   DepthImage depth_frame_cube_C(camera_.height(), camera_.width(),
                                 MemoryType::kUnified);
+  /// 生成对应的深度图图像，发现场景中有个立方体.
   scene.generateDepthImageFromScene(camera_, T_L_C, kMaxProjectionDist,
                                     &depth_frame_cube_C);
 
-  // Check that the cube is detected as dynamic
-  // as it was added after creating the layer
+  // Check that the cube is detected as dynamic, as it was added after creating the layer
+  /// 检查得到立方体是动态物体的，因为他是在创建layer之后添加的.
+  /// 这里给我的感觉是必须要先有静态场景计算出来，有了静态场景计算出来后，才能计算动态场景.
   detector.computeDynamics(depth_frame_cube_C, freespace_layer_L, camera_,
                            T_L_C);
   auto dynamic_points_cube = detector.getDynamicPointsHost();

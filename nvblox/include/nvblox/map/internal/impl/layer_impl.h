@@ -83,13 +83,18 @@ typename BlockType::ConstPtr BlockLayer<BlockType>::getBlockAtIndex(
 template <typename BlockType>
 typename BlockType::Ptr BlockLayer<BlockType>::allocateBlockAtIndexAsync(
     const Index3D& index, const CudaStream& cuda_stream) {
+  // 这里还是有点疑问的->blocks是如何创建的.
   auto it = blocks_.find(index);
+  // 如果已经存在了，就返回他对应的block地址.
   if (it != blocks_.end()) {
     return it->second;
   } else {
     // Invalidate the GPU hash
+    // 首先停止访问GPU端数据.
     gpu_layer_view_up_to_date_ = false;
 
+    // 判断插入后的状态.
+    // 这里感觉是把cuda stream做成一个个对象，放到线程池中，取出来后，操作.
     auto insert_status =
         blocks_.emplace(index, memory_pool_.popBlock(cuda_stream));
     return insert_status.first->second;
@@ -99,15 +104,19 @@ typename BlockType::Ptr BlockLayer<BlockType>::allocateBlockAtIndexAsync(
 template <typename BlockType>
 typename BlockType::Ptr BlockLayer<BlockType>::allocateBlockAtIndex(
     const Index3D& index) {
+  // 在分配的时候，创建一个cuda stream流->类似在用这个函数的时候创建，用完后就销毁.
   return allocateBlockAtIndexAsync(index, CudaStreamOwning());
 }
 
+// 这里是在某一个cuda stream上，对indices上进行块，内存分配.
 template <typename BlockType>
 void BlockLayer<BlockType>::allocateBlocksAtIndices(
     const std::vector<Index3D>& indices, const CudaStream& cuda_stream) {
+  // 这里是单独分配.
   for (const Index3D& idx : indices) {
     allocateBlockAtIndexAsync(idx, cuda_stream);
   }
+  // 这里是GPU和主机间需要进行的同步->Device往Host拷贝完数据后的同步做法.
   cuda_stream.synchronize();
 }
 

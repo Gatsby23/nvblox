@@ -1,0 +1,43 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"cmake-build-debug/_deps/ext_stdgpu-src/src/stdgpu/cuda/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 20,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "stdgpu",
+			"destination" : "lib/cmake/stdgpu/cuda",
+			"paths" : 
+			[
+				"cmake-build-debug/_deps/ext_stdgpu-src/cmake/cuda/FindCUDAToolkit.cmake"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "_deps/ext_stdgpu-build/src/stdgpu/cuda",
+		"source" : "cmake-build-debug/_deps/ext_stdgpu-src/src/stdgpu/cuda"
+	}
+}

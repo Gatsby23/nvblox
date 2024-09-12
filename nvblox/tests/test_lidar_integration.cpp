@@ -233,13 +233,13 @@ TEST_F(LidarIntegrationTest, SurroundingSphere) {
     }
   };
   callFunctionOnAllVoxels<TsdfVoxel>(layer, lambda);
-
+    bool FLAGS_nvblox_test_file_output = true;
   if (FLAGS_nvblox_test_file_output) {
     // Write out the mesh
-    const std::string mesh_filepath = "lidar_sphere_mesh.ply";
+    const std::string mesh_filepath = "/home/robotics/lidar_sphere_mesh.ply";
     io::outputMeshLayerToPly(mesh_layer, mesh_filepath);
     // Output
-    const std::string filepath = "sphere_lidar_image.png";
+    const std::string filepath = "/home/robotics/sphere_lidar_image.png";
     io::writeToPng(filepath, depth_image);
   }
 }

@@ -41,7 +41,8 @@ TEST(BlockMemoryPool, pushAndPop) {
 
   // We should get the same pointer back
   ASSERT_EQ(popped_block.get(), repopped_block.get());
-}
+}  /// Container for storing the memory in the pool
+
 
 int main(int argc, char** argv) {
   FLAGS_alsologtostderr = true;

@@ -102,6 +102,7 @@ inline float Scene::getVoxelGroundTruthValue(const Vector3f& position,
   }
 }
 
+// 这个函数更多地像对场景进行voxel体素化.
 template <typename VoxelType>
 void Scene::generateLayerFromScene(float max_dist,
                                    VoxelBlockLayer<VoxelType>* layer) const {
@@ -110,11 +111,12 @@ void Scene::generateLayerFromScene(float max_dist,
          "(MemoryType::kUnified or MemoryType::kHost).";
 
   CHECK_NOTNULL(layer);
-
+  // 得到一层的block和voxel数量
   const float block_size = layer->block_size();
   const float voxel_size = layer->voxel_size();
 
   // First allocate all the blocks within the AABB.
+  // 在AABB中对所有的blocks进行分配.
   std::vector<Index3D> block_indices =
       getBlockIndicesTouchedByBoundingBox(block_size, aabb_);
 
@@ -122,8 +124,8 @@ void Scene::generateLayerFromScene(float max_dist,
     layer->allocateBlockAtIndex(block_index);
   }
 
-  // Iterate over every voxel in the layer and compute its distance to all
-  // objects.
+  // Iterate over every voxel in the layer and compute its distance to all objects.
+  // 遍历每个体素，计算其到所有物体的距离.
   auto lambda = [&block_size, &max_dist, &voxel_size, this](
                     const Index3D& block_index, const Index3D& voxel_index,
                     VoxelType* voxel) {
@@ -135,8 +137,7 @@ void Scene::generateLayerFromScene(float max_dist,
     }
 
     // Get the ground truth value for this voxel and update it
-    float gt_value =
-        getVoxelGroundTruthValue<VoxelType>(position, max_dist, voxel_size);
+    float gt_value = getVoxelGroundTruthValue<VoxelType>(position, max_dist, voxel_size);
     setVoxel<VoxelType>(gt_value, voxel);
   };
 

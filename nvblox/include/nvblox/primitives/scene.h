@@ -62,31 +62,39 @@ class Scene {
 
   /// Create an environment by adding primitives, which are then owned by the
   /// scene.
+  /// 通过添加图元来创建环境，这些图元被场景操控.
   void addPrimitive(std::unique_ptr<Primitive> primitive);
 
   /// @brief  Adds a ground level (normal up) at a given height on the Z axis.
+  /// 在给定的Z轴高度上添加一个地面层（法线向上）.
   /// @param height Height, in meters, of the ground.
   void addGroundLevel(float height);
   /// @brief  Adds a ceiling at a given height. All heights on the Z axis.
+  ///       -> 在给定高度上添加天花板。所有高度均指Z轴上的位置。
   /// @param height Height, in meters, of the ceiling.
   void addCeiling(float height);
 
   /// Add 4 walls (infinite planes) bounding the space. In case this is not the
   /// desired behavior, can use addObject to add walls manually one by one.
   /// If infinite walls are undesirable, then use cubes.
+  /// 添加4面围绕空间的墙壁（无限平面）。如果这不是预期的行为，
+  /// 也可以使用 addObject 手动逐个添加墙壁。
   void addPlaneBoundaries(float x_min, float x_max, float y_min, float y_max);
 
   /// Deletes all objects!
+  /// 删除所有的物体
   void clear();
 
   /// Generates a synthetic view given camera parameters and a transformation
   /// of the camera to the scene.
+  /// 依据相机参数生成对应视角下的合成图.
   void generateDepthImageFromScene(const Camera& camera, const Transform& T_S_C,
                                    float max_dist,
                                    DepthImage* depth_frame) const;
 
   /// Computes the ground truth SDFs (either TSDF or ESDF depending on template
   /// parameter).
+  /// 计算出完美的SDF.
   template <typename VoxelType>
   void generateLayerFromScene(float max_dist,
                               VoxelBlockLayer<VoxelType>* layer) const;
@@ -97,6 +105,7 @@ class Scene {
   float getSignedDistanceToPoint(const Vector3f& coords, float max_dist) const;
 
   /// Get the intersection of a ray with the first hit object in the scene.
+  /// 算出光线与场景中第一个命中物体的交点。
   bool getRayIntersection(const Vector3f& ray_origin,
                           const Vector3f& ray_direction, float max_dist,
                           Vector3f* ray_intersection, float* ray_dist) const;
@@ -113,10 +122,13 @@ class Scene {
                                         float voxel_size = 0) const;
 
   /// Vector storing pointers to all the objects in this world.
+  /// vector中存储所有指向图元的指针.
   std::vector<std::unique_ptr<Primitive>> primitives_;
 
   /// World boundaries... Can be changed arbitrarily, just sets ground truth
+  /// 世界的边界，主要用于设置真实值.
   /// generation and visualization bounds, accurate only up to block size.
+  /// 生成和可视化边界，仅在块大小范围内准确.
   AxisAlignedBoundingBox aabb_;
 };
 

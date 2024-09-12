@@ -34,6 +34,7 @@ struct VoxelBlock {
   static constexpr int kVoxelsPerSide = 8;
   static constexpr int kNumVoxels =
       kVoxelsPerSide * kVoxelsPerSide * kVoxelsPerSide;
+  // 初始化的voxel随模板的变化而变化.
   VoxelType voxels[kVoxelsPerSide][kVoxelsPerSide][kVoxelsPerSide];
 
   /// Allocate a voxel block of a given memory type.
@@ -42,6 +43,7 @@ struct VoxelBlock {
   static Ptr allocate(MemoryType memory_type);
   /// Initializes all the memory of the voxels to 0 by default, can be
   /// specialized by voxel type.
+  /// 这里是依据Voxel Type的类型来进行不同的初始化.
   static void initAsync(VoxelBlock* block_ptr, const MemoryType memory_type,
                         const CudaStream& cuda_stream);
 };

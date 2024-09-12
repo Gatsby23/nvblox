@@ -105,10 +105,13 @@ bool Scene::getRayIntersection(const Vector3f& ray_origin,
   for (const std::unique_ptr<Primitive>& primitive : primitives_) {
     Vector3f primitive_intersection;
     float primitive_dist;
+    // 这里看到还是得通过图元来判断场景中的相交情况.
     bool intersects =
         primitive->getRayIntersection(ray_origin, ray_direction, max_dist,
                                       &primitive_intersection, &primitive_dist);
+    // 如果确定相交.
     if (intersects) {
+      // 并且图元的距离小于相交的距离.
       if (!ray_valid || primitive_dist < *ray_dist) {
         ray_valid = true;
         *ray_dist = primitive_dist;
@@ -129,7 +132,8 @@ void Scene::generateDepthImageFromScene(const Camera& camera,
          "required.";
   CHECK_EQ(depth_frame->rows(), camera.height());
   CHECK_EQ(depth_frame->cols(), camera.width());
-
+  // The Scene to the camera(world->camera).
+  // Transform的基础类型是Eigen::Isometry3f->保持位姿特性.
   const Transform T_C_S = T_S_C.inverse();
 
   // Iterate over the entire image.
@@ -137,6 +141,8 @@ void Scene::generateDepthImageFromScene(const Camera& camera,
   for (u_C.x() = 0; u_C.x() < camera.width(); u_C.x()++) {
     for (u_C.y() = 0; u_C.y() < camera.height(); u_C.y()++) {
       // Get the ray going through this pixel.
+      // 依据像素位置进行方向反投影.
+      // 注意到这里是Camera->场景.
       const Vector3f ray_direction =
           T_S_C.linear() * camera.vectorFromPixelIndices(u_C).normalized();
       // Get the intersection point for this ray.

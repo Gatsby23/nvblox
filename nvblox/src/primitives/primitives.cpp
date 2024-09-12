@@ -46,12 +46,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace nvblox {
 namespace primitives {
-
+/// 当前点到物体的距离.
 float Sphere::getDistanceToPoint(const Vector3f& point) const {
   float distance = (center_ - point).norm() - radius_;
   return distance;
 }
 
+/// 当前光线线束与物体的交点.
 bool Sphere::getRayIntersection(const Vector3f& ray_origin,
                                 const Vector3f& ray_direction, float max_dist,
                                 Vector3f* intersect_point,

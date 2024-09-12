@@ -31,17 +31,24 @@ class ParameterizedLidarTest
     : public LidarTest,
       public ::testing::WithParamInterface<std::tuple<int, int, float>> {
  protected:
-  // Yo dawg I heard you like params
+  // I heard you like params.
 };
 
 TEST_P(ParameterizedLidarTest, Extremes) {
   // Lidar params
+  // 获得雷达的参数.
   const auto params = GetParam();
+  // 方位角(yaw)划分数.
   const int num_azimuth_divisions = std::get<0>(params);
+  // 仰角(pitch)划分数.
   const int num_elevation_divisions = std::get<1>(params);
+  // 垂直角度.
   const float vertical_fov_deg = std::get<2>(params);
+  // 将角度转换成弧度.
   const float vertical_fov_rad = vertical_fov_deg * M_PI / 180.0f;
+  // 测量范围（最短）.
   const float min_valid_range_m = 0.0f;
+  // 测量范围（最长）.
   const float max_valid_range_m = 100.0f;
 
   Lidar lidar(num_azimuth_divisions, num_elevation_divisions, min_valid_range_m,

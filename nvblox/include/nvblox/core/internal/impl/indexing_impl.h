@@ -40,9 +40,14 @@ void getBlockAndVoxelIndexFromPositionInLayer(const float block_size,
                                               const Vector3f& position,
                                               Index3D* block_idx,
                                               Index3D* voxel_idx) {
+  // 每一边的体素数目减一.
   constexpr int kVoxelsPerSideMinusOne = VoxelBlock<bool>::kVoxelsPerSide - 1;
+  // blocksizetovoxelsize是通过block size确定有多少voxel，然后得到voxel size的个数？
   const float voxel_size_inv = 1.0 / blockSizeToVoxelSize(block_size);
+  // 除以block size的边长，然后上取整->确定block的idx位置.
   *block_idx = (position / block_size).array().floor().cast<int>();
+  // 得到block里对应的voxel的idx位置.
+  // *.min的操作是确保在[0~7之间].
   *voxel_idx =
       ((position - block_size * block_idx->cast<float>()) * voxel_size_inv)
           .array()

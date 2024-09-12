@@ -21,6 +21,8 @@ namespace nvblox {
 
 /// Helper class for handling input LIDAR pointclouds and storing the LIDAR
 /// intrinsics. This helps convert a LIDAR pointcloud into a depth image.
+
+/// 这里相当于将LiDAR传感器类比成Depth Camera，然后将点云图转换出深度图来进行操作.
 class Lidar {
  public:
   Lidar() = delete;
@@ -72,6 +74,7 @@ class Lidar {
   __host__ __device__ inline float getDepth(const Vector3f& p_C) const;
 
   /// Back projection (image plane point to 3D point)
+  /// 这里我的感觉是不是raycast？
   __host__ __device__ inline Vector3f unprojectFromImagePlaneCoordinates(
       const Vector2f& u_C, const float depth) const;
   __host__ __device__ inline Vector3f unprojectFromPixelIndices(
@@ -116,6 +119,7 @@ class Lidar {
 
  private:
   // Core parameters
+  // 核心参数.
   int num_azimuth_divisions_;
   int num_elevation_divisions_;
   float min_valid_range_m_;
@@ -124,6 +128,7 @@ class Lidar {
   float start_polar_angle_rad_;
 
   // Dependent parameters
+  // 独立参数.
   float start_azimuth_angle_rad_;
   float elevation_pixels_per_rad_;
   float azimuth_pixels_per_rad_;

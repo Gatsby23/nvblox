@@ -31,6 +31,7 @@ namespace nvblox {
  */
 struct Index3DHash {
   /// number was arbitrarily chosen with no good justification
+  /// 这里的数字是任意分配的，并没有什么特殊的理由.
   static constexpr size_t sl = 17191;
   static constexpr size_t sl2 = sl * sl;
 
@@ -55,6 +56,8 @@ struct VectorCompare {
 
 template <typename ValueType>
 struct Index3DHashMapType {
+
+  /// 这里是通过std::equal_to来寻找相同的键值对，判断键的位置是否相同.
   typedef std::unordered_map<
       Index3D, ValueType, Index3DHash, std::equal_to<Index3D>,
       Eigen::aligned_allocator<std::pair<const Index3D, ValueType>>>

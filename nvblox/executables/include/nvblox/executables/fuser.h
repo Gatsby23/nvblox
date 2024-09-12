@@ -69,8 +69,7 @@ class Fuser {
   // Output the serialized map to a file
   bool outputMapToFile();
 
-  // Get the static mapper (useful for experiments where we modify mapper
-  // settings)
+  // Get the static mapper (useful for experiments where we modify mapper settings)
   Mapper& static_mapper();
 
   // MultiMapper - Contains two mappers

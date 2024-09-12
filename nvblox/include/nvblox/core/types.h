@@ -43,6 +43,7 @@ inline std::string toString(const std::string& val) {
 }
 
 /// How GPU data is stored, either in Device-only or unified (both) memory.
+/// GPU数据存储的地方，主机上(kHost)，设备上(Device)，还是都有(Unified).
 /// NOTE(alexmillane): tag: c++17, switch to constexpr when we move to c++17.
 enum class MemoryType { kDevice, kUnified, kHost };
 template <>
